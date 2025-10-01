@@ -34,6 +34,7 @@ def main():
 
   data_file_path = '../data/tests_data.csv'
   output_regression_file_path = '../images/regression_line.png'
+  output_regression_dir_path = '../images'
 
   df = dl.load_df(data_file_path)
 
@@ -54,6 +55,9 @@ def main():
   plt.grid(True)
 
   print(results.summary())
+
+  if not os.path.isdir(output_regression_dir_path):
+    os.mkdir(output_regression_dir_path)
   plt.savefig(output_regression_file_path)
 
 
