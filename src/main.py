@@ -7,20 +7,25 @@ import statsmodels.formula.api as smf
 import sys
 import time
 
+
+
+
+relative_git_log_file = '../logs/git.log'
+relative_git_log_dir = '../logs'
+
+if not os.path.isdir(relative_git_log_dir):
+  os.mkdir(relative_git_log_dir)
+
 if not os.path.isdir('utils'):
-  os.system('git clone https://github.com/GevChalikyan/utils.git')
+  os.system(f'printf \'{time.asctime()}:\\n\' > {relative_git_log_file} 2>&1')
+  os.system(f'git clone https://github.com/GevChalikyan/utils.git >> {relative_git_log_file} 2>&1')
 
 else:
-
-  git_log_file_relative_to_utils = '../../logs/git.log'
-  git_log_dir_relative_to_utils = '../../logs'
-
-  if not os.path.isdir(git_log_dir_relative_to_utils):
-    os.mkdir(git_log_dir_relative_to_utils)
-
   os.chdir('utils')
-  os.system(f'printf \'{time.asctime()}:\\n\' >> {git_log_file_relative_to_utils} 2>&1')
-  os.system(f'git pull >> {git_log_file_relative_to_utils} 2>&1')
+  relative_git_log_file = '../' + relative_git_log_file
+  
+  os.system(f'printf \'{time.asctime()}:\\n\' >> {relative_git_log_file} 2>&1')
+  os.system(f'git pull >> {relative_git_log_file} 2>&1')
   os.chdir('..')
 
 sys.path.append('utils')
