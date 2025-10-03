@@ -1,34 +1,14 @@
-import logging
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 import statsmodels.formula.api as smf
-import sys
-import time
 
 
 
 
-relative_git_log_file = '../logs/git.log'
-relative_git_log_dir = '../logs'
 
-if not os.path.isdir(relative_git_log_dir):
-  os.mkdir(relative_git_log_dir)
+import __init__
 
-if not os.path.isdir('utils'):
-  os.system(f'printf \'{time.asctime()}:\\n\' > {relative_git_log_file} 2>&1')
-  os.system(f'git clone https://github.com/GevChalikyan/utils.git >> {relative_git_log_file} 2>&1')
-
-else:
-  os.chdir('utils')
-  relative_git_log_file = '../' + relative_git_log_file
-  
-  os.system(f'printf \'{time.asctime()}:\\n\' >> {relative_git_log_file} 2>&1')
-  os.system(f'git pull >> {relative_git_log_file} 2>&1')
-  os.chdir('..')
-
-sys.path.append('utils')
 import data_loader as dl
 
 
