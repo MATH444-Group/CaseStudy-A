@@ -1,7 +1,9 @@
+import logging
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
+import time
 
 
 
@@ -75,5 +77,9 @@ def main():
 if __name__ == '__main__':
 
   logger.setup()
-
+  
+  logging.info('Began Execution.')
+  start = time.time()
   main()
+  run_time = time.time() - start
+  logging.info(f'Finished Execution.\n\tRun Time: {run_time:.2f}s')
