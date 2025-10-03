@@ -13,7 +13,6 @@ import __init__
 
 import data_loader as dl
 import files
-import logger
 
 
 
@@ -75,8 +74,6 @@ def main():
 
 
 if __name__ == '__main__':
-
-  logger.setup()
   
   logging.info('Began Execution.')
   start = time.time()
