@@ -10,6 +10,8 @@ import statsmodels.formula.api as smf
 import __init__
 
 import data_loader as dl
+import files
+import logger
 
 
 
@@ -17,21 +19,31 @@ import data_loader as dl
 
 def main():
 
-  data_file_path = '../data/tests_data.csv'
-  output_regression_file_path = '../images/regression_line.png'
-  output_regression_dir_path = '../images'
-  output_analysis_file_path = '../docs/results.txt'
-  output_analysis_dir_path = '../docs'
+  data_file = '../data/tests_data.csv'
+  output_regression_file = '../images/regression_line.png'
+  output_analysis_file = '../docs/results.txt'
+
+  df = dl.load_df(data_file)
 
 
 
-  df = dl.load_df(data_file_path)
 
+
+  # Build model using the Order of Least Squares algorithm
   model = smf.ols('test2 ~ test1', data=df)
   results = model.fit()
+
+  p_value = results.f_pvalue
+  r_squared = results.rsquared
   
+
+
+
+
+  # Plotting data points
   plt.scatter(df['test1'], df['test2'], color='black', label='Actual Data')
 
+  # Draw regression line over the scatter plot we just made
   x_line = np.linspace(df['test1'].min(), df['test1'].max(), 100)
   y_line = results.predict(pd.DataFrame({'test1': x_line}))
 
@@ -43,26 +55,25 @@ def main():
   plt.legend()
   plt.grid(True)
 
-  p_value = results.f_pvalue
-  r_squared = results.rsquared
 
-  if not os.path.isdir(output_analysis_dir_path):
-    os.mkdir(output_analysis_dir_path)
-  with open(output_analysis_file_path, 'w') as file:
+
+  
+
+  # Record our findings in a file for later reference
+  files.validate_dir(output_analysis_file)
+  with open(output_analysis_file, 'w') as file:
     file.write(results.summary().as_text())
     file.write(f'\n\nFull P-Value: {p_value}')
     file.write(f'\nFull R-Squared: {r_squared}')
 
-  if not os.path.isdir(output_regression_dir_path):
-    os.mkdir(output_regression_dir_path)
-  plt.savefig(output_regression_file_path)
+  files.validate_dir(output_regression_file)
+  plt.savefig(output_regression_file)
 
 
 
 
 if __name__ == '__main__':
 
-  import logger
   logger.setup()
 
   main()
