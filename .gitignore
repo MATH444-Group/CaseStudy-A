@@ -11,3 +11,5 @@ build/
 images/
 logs/
 utils/
+
+*.txt
