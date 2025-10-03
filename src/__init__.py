@@ -20,7 +20,7 @@ else:
   os.chdir('utils')
   git_log_file = '../' + git_log_file
   
-  os.system(f'printf \'{time.asctime()}:\\n\' >> {git_log_file} 2>&1')
+  os.system(f'printf \'\\n{time.asctime()}:\\n\' >> {git_log_file} 2>&1')
   os.system(f'git pull >> {git_log_file} 2>&1')
   os.chdir('..')
 
